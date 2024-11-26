@@ -51,12 +51,15 @@ After stopping the log data or when the player exits the game, you can find the 
 ---
 
 ## Contribution
-We welcome contributions to improve PixelLog! Please see our [CONTRIBUTING.md](https://github.com/your-repo/CONTRIBUTING.md) for details on how to get involved.
+We welcome contributions to improve PixelLog! Please see our [CONTRIBUTING.md](https://github.com/NMIL230/nmil-mc-pixelLOG/blob/main/CONTRIBUTING.md) for details on how to get involved.
 
 ---
 
 ## License
 TODO
+
+
+
 ---
 
 ## Support
