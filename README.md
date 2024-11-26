@@ -2,7 +2,7 @@
 
 PixelLog is a Minecraft Spigot plugin designed to capture player information across any game mode. This includes, but is not limited to, player location, views, inventory, and various game events. The plugin is specifically tailored for Spigot version **1.20.4**.
 
-A comprehensive list of all data categories is provided [here](https://github.com/NMIL230/nmil-mc-pixelLOG/blob/main/DOCUMENTATION.md)
+A comprehensive list of all data categories can be captured is provided [here](https://github.com/NMIL230/nmil-mc-pixelLOG/blob/main/DOCUMENTATION.md).
 
 ## Features
 - **Player Data Logging**: Captures and logs detailed player information.
