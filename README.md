@@ -48,7 +48,7 @@ PixelLog provides the following commands for managing logs:
 | **pl-version**  | Display the plugin version (test command).    | `/pl-version`                  |
 
 ### Logfile
-After stopping the log data or when the player exits the game, you can find the generated logfile in the PixelLogs folder under the Spigot directory.
+After stopping the log data or when the player exits the game, you can find the generated logfile in the `PixelLogs` folder under the Spigot directory.
 
 ---
 
