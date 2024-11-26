@@ -21,19 +21,14 @@ public class MainListener implements Listener {
 
     @EventHandler
     public void on(ServerListPingEvent event) {
-
-        event.setMotd("§8» §6§lPixelLOG§7 V0.0.1 Enabled");
-//        event.setMaxPlayers(250);
+        event.setMotd("§8» §6§lPixelLOG§7 Enabled");
     }
 
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        player.setGameMode(GameMode.ADVENTURE);
-
         callback.playerJoinHandler(player);
-
     }
 
 
@@ -41,17 +36,10 @@ public class MainListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         callback.playerQuitHandler(player);
-
     }
 
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
     }
-
-
-
-
-
-
 
 }

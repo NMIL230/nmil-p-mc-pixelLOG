@@ -7,31 +7,33 @@ import org.bukkit.entity.Player;
 public class NmilPlayer {
 
     public Player player;
-    public nmil.mceeg.plugin.Logger.LoggerController LoggerController;
+    public LoggerController loggerController;
     private MainPluginCallback callback;
 
 
     public NmilPlayer(Player player, MainPluginCallback callback) {
         this.callback = callback;
         this.player = player;
-        LoggerController = new LoggerController(this,player,callback);
+        loggerController = new LoggerController(this,player,callback);
     }
 
 
 
     public void handlePlayerQuitMinecraft() {
-
+        if (loggerController != null && loggerController.active) {
+            loggerController.stopCapture();
+        }
     }
 
     public void startCollectingLogFileOnPlayer() {
-        if (LoggerController != null) {
-            LoggerController.startCapture(player);
+        if (loggerController != null) {
+            loggerController.startCapture(player);
         }
     }
 
     public void stopCollectingLogFileOnPlayer() {
-        if (LoggerController != null) {
-            LoggerController.stopCapture(true);
+        if (loggerController != null) {
+            loggerController.stopCapture();
         }
     }
 

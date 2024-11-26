@@ -7,10 +7,12 @@ import nmil.mceeg.plugin.type.LogType;
 import nmil.mceeg.plugin.util.WebSocketServerController;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class MainPlugin extends JavaPlugin implements MainPluginCallback {
 
@@ -47,7 +49,6 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
         this.getCommand("pl-stop-op").setExecutor(commandExecutor);
 
 
-        // Hawkeye
         logger = new Logger(this);
 
         // WebSocket
@@ -86,23 +87,21 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
     @Override
     public void playerJoinHandler(Player player) {
         // if (!player.isOp()) {}
-        player.getInventory().clear();
         onlinePlayerMap.put(player, new NmilPlayer(player, this));
     }
 
     @Override
     public void playerQuitHandler(Player player) {
-        player.getInventory().clear();
         long delay = 130L;
+        onlinePlayerMap.get(player).handlePlayerQuitMinecraft();
 
 
-//        onlinePlayerMap.get(player).handlePlayerUsePortKeyOrQuitMinecraft();
-//        new BukkitRunnable() {
-//            @Override
-//            public void run() {
-//                onlinePlayerMap.remove(player);
-//            }
-//        }.runTaskLater(Objects.requireNonNull(this), delay); // 100 ticks = 5 seconds
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                onlinePlayerMap.remove(player);
+            }
+        }.runTaskLater(Objects.requireNonNull(this), delay);
 
     }
 
@@ -114,8 +113,8 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
     @Override
     public void addLogToPlayer(Player player, Map<String, Object> log) {
         NmilPlayer nmilPlayer = onlinePlayerMap.get(player);
-        if (nmilPlayer != null && nmilPlayer.LoggerController != null) {
-            nmilPlayer.LoggerController.handleLog(log, LogType.EVENT_LOG);
+        if (nmilPlayer != null && nmilPlayer.loggerController != null) {
+            nmilPlayer.loggerController.handleLog(log, LogType.EVENT_LOG);
         }
     }
 
@@ -134,7 +133,6 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
     @Override
     public void sendWebSocketMessage(String json) {
         wsServerController.broadcast(json);
-        //getLogger().info("Hawkeye: " +  json);
     }
 
 

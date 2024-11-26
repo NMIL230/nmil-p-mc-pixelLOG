@@ -48,14 +48,14 @@
 
     </dependencies>
     <build>
-        <finalName>PixelDOPA</finalName>
+        <finalName>PixelLOG</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.3.0</version>
                 <configuration>
-                    <outputDirectory>/home/labuser/Documents/Spigot_dev/1.20.4/plugins</outputDirectory>
+                    <outputDirectory>/home/labuser/Documents/Spigot_dev/1.20.4-pl/plugins</outputDirectory>
                     <!--custom jar file outputDirectory !!-->
                 </configuration>
             </plugin>

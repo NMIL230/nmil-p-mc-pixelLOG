@@ -5,12 +5,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockDamageEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.block.*;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
@@ -29,90 +25,117 @@ public class PlayerEventListener implements Listener {
         this.callback = callback;
     }
 
-    // Block break event
+    private Map<String, Object> createLocationJson(Location location) {
+        Map<String, Object> loc = new HashMap<>();
+        loc.put("x", location.getBlockX());
+        loc.put("y", location.getBlockY());
+        loc.put("z", location.getBlockZ());
+        return loc;
+    }
+
+    private Map<String, Object> createItemJson(ItemStack item) {
+        if (item != null) {
+            Map<String, Object> itemJson = new HashMap<>();
+            itemJson.put("type", item.getType().toString());
+            itemJson.put("amount", item.getAmount());
+            return itemJson;
+        }
+        return null;
+    }
+
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
-        Location location = event.getBlock().getLocation();
         Map<String, Object> eventInfo = new HashMap<>();
         eventInfo.put("player", player.getName());
         eventInfo.put("event", PlayerEventType.block_break_event);
-        eventInfo.put("block_type", event.getBlock().getType());
-        eventInfo.put("block_location", "x=" + location.getBlockX() + ", y=" + location.getBlockY() + ", z=" + location.getBlockZ());
+
+        Map<String, Object> info = new HashMap<>();
+        info.put("block_type", event.getBlock().getType());
+        info.put("block_location", createLocationJson(event.getBlock().getLocation()));
+        eventInfo.put("info", info);
+
         callback.handleEventInfo(player, eventInfo, "event-block");
     }
 
-    // Block damage event
     @EventHandler
     public void onBlockDamage(BlockDamageEvent event) {
         Player player = event.getPlayer();
-        ItemStack itemInHand = player.getItemInHand();
-        Location location = event.getBlock().getLocation();
         Map<String, Object> eventInfo = new HashMap<>();
         eventInfo.put("player", player.getName());
         eventInfo.put("event", PlayerEventType.block_damage_event);
-        eventInfo.put("block_type", event.getBlock().getType());
-        eventInfo.put("block_location", "x=" + location.getBlockX() + ", y=" + location.getBlockY() + ", z=" + location.getBlockZ());
-        eventInfo.put("item_in_hand", itemInHand != null ? itemInHand.getType() : "none");
+
+        Map<String, Object> info = new HashMap<>();
+        info.put("block_type", event.getBlock().getType());
+        info.put("block_location", createLocationJson(event.getBlock().getLocation()));
+        info.put("item_in_hand", createItemJson(player.getItemInHand()));
+        eventInfo.put("info", info);
+
         callback.handleEventInfo(player, eventInfo, "event-block");
     }
 
-    // Block place event
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
         Player player = event.getPlayer();
-        Location location = event.getBlockPlaced().getLocation();
         Map<String, Object> eventInfo = new HashMap<>();
         eventInfo.put("player", player.getName());
         eventInfo.put("event", PlayerEventType.block_place_event);
-        eventInfo.put("block_type", event.getBlock().getType());
-        eventInfo.put("block_location", "x=" + location.getBlockX() + ", y=" + location.getBlockY() + ", z=" + location.getBlockZ());
+
+        Map<String, Object> info = new HashMap<>();
+        info.put("block_type", event.getBlock().getType());
+        info.put("block_location", createLocationJson(event.getBlockPlaced().getLocation()));
+        eventInfo.put("info", info);
+
         callback.handleEventInfo(player, eventInfo, "event-block");
     }
 
-    // Player interaction event
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        Action action = event.getAction();
-        Block clickedBlock = event.getClickedBlock();
-        ItemStack itemInHand = event.getItem();
         Map<String, Object> eventInfo = new HashMap<>();
         eventInfo.put("player", player.getName());
         eventInfo.put("event", PlayerEventType.player_interact_event);
-        eventInfo.put("action", action);
-        eventInfo.put("item_in_hand", itemInHand != null ? itemInHand.getType() : "none");
-        if (clickedBlock != null) {
-            Location location = clickedBlock.getLocation();
-            eventInfo.put("block_type", clickedBlock.getType());
-            eventInfo.put("block_location", "x=" + location.getBlockX() + ", y=" + location.getBlockY() + ", z=" + location.getBlockZ());
+
+        Map<String, Object> info = new HashMap<>();
+        info.put("action", event.getAction());
+        info.put("item_in_hand", createItemJson(event.getItem()));
+        if (event.getClickedBlock() != null) {
+            info.put("block_type", event.getClickedBlock().getType());
+            info.put("block_location", createLocationJson(event.getClickedBlock().getLocation()));
         }
+        eventInfo.put("info", info);
+
         callback.handleEventInfo(player, eventInfo, "event-interact");
     }
 
-    // Player interacts with entity event
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
         Player player = event.getPlayer();
         Map<String, Object> eventInfo = new HashMap<>();
         eventInfo.put("player", player.getName());
         eventInfo.put("event", PlayerEventType.player_interact_entity_event);
-        eventInfo.put("entity_type", event.getRightClicked().getType());
+
+        Map<String, Object> info = new HashMap<>();
+        info.put("entity_type", event.getRightClicked().getType());
+        eventInfo.put("info", info);
+
         callback.handleEventInfo(player, eventInfo, "event-interact");
     }
 
-    // Player shears entity event
     @EventHandler
     public void onPlayerShearEntity(PlayerShearEntityEvent event) {
         Player player = event.getPlayer();
         Map<String, Object> eventInfo = new HashMap<>();
         eventInfo.put("player", player.getName());
         eventInfo.put("event", PlayerEventType.player_shear_entity_event);
-        eventInfo.put("entity_type", event.getEntity().getType());
+
+        Map<String, Object> info = new HashMap<>();
+        info.put("entity_type", event.getEntity().getType());
+        eventInfo.put("info", info);
+
         callback.handleEventInfo(player, eventInfo, "event-interact");
     }
 
-    // Player attacks entity event
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
@@ -120,12 +143,16 @@ public class PlayerEventListener implements Listener {
             Map<String, Object> eventInfo = new HashMap<>();
             eventInfo.put("player", player.getName());
             eventInfo.put("event", PlayerEventType.entity_damage_by_entity_event);
-            eventInfo.put("entity_type", event.getEntity().getType());
+
+            Map<String, Object> info = new HashMap<>();
+            info.put("entity_type", event.getEntity().getType());
+            info.put("damage", event.getDamage());
+            eventInfo.put("info", info);
+
             callback.handleEventInfo(player, eventInfo, "event-fight");
         }
     }
 
-    // Player gets hurt event
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
@@ -133,58 +160,79 @@ public class PlayerEventListener implements Listener {
             Map<String, Object> eventInfo = new HashMap<>();
             eventInfo.put("player", player.getName());
             eventInfo.put("event", PlayerEventType.entity_damage_event);
-            eventInfo.put("cause", event.getCause());
+
+            Map<String, Object> info = new HashMap<>();
+            info.put("cause", event.getCause());
+            info.put("damage", event.getDamage());
+            eventInfo.put("info", info);
+
             callback.handleEventInfo(player, eventInfo, "event-fight");
         }
     }
 
-    // Player consumes item event
     @EventHandler
     public void onPlayerItemConsume(PlayerItemConsumeEvent event) {
         Player player = event.getPlayer();
         Map<String, Object> eventInfo = new HashMap<>();
         eventInfo.put("player", player.getName());
         eventInfo.put("event", PlayerEventType.player_item_consume_event);
-        eventInfo.put("item_type", event.getItem().getType());
+
+        Map<String, Object> info = new HashMap<>();
+        info.put("item", createItemJson(event.getItem()));
+        eventInfo.put("info", info);
+
         callback.handleEventInfo(player, eventInfo, "event-item");
     }
 
-    // Player changes held item event
     @EventHandler
     public void onPlayerItemHeld(PlayerItemHeldEvent event) {
         Player player = event.getPlayer();
         PlayerInventory inventory = player.getInventory();
         ItemStack newItem = inventory.getItem(event.getNewSlot());
+
         Map<String, Object> eventInfo = new HashMap<>();
         eventInfo.put("player", player.getName());
         eventInfo.put("event", PlayerEventType.player_item_held_event);
-        eventInfo.put("new_item", newItem != null ? newItem.getType().toString() : "none");
+
+        Map<String, Object> info = new HashMap<>();
+        info.put("new_item", createItemJson(newItem));
+        eventInfo.put("info", info);
+
         callback.handleEventInfo(player, eventInfo, "event-item");
     }
 
-    // Player drops item event
     @EventHandler
     public void onPlayerDropItem(PlayerDropItemEvent event) {
         Player player = event.getPlayer();
         Map<String, Object> eventInfo = new HashMap<>();
         eventInfo.put("player", player.getName());
         eventInfo.put("event", PlayerEventType.player_drop_item_event);
-        eventInfo.put("item_type", event.getItemDrop().getItemStack().getType());
+
+        Map<String, Object> info = new HashMap<>();
+        ItemStack droppedItem = event.getItemDrop().getItemStack();
+        info.put("item_type", droppedItem.getType().toString());
+        info.put("amount", droppedItem.getAmount());
+        eventInfo.put("info", info);
+
         callback.handleEventInfo(player, eventInfo, "event-item");
     }
 
-    // Player picks up item event
     @EventHandler
     public void onPlayerPickupItem(PlayerPickupItemEvent event) {
         Player player = event.getPlayer();
         Map<String, Object> eventInfo = new HashMap<>();
         eventInfo.put("player", player.getName());
         eventInfo.put("event", PlayerEventType.player_pickup_item_event);
-        eventInfo.put("item_type", event.getItem().getItemStack().getType());
+
+        Map<String, Object> info = new HashMap<>();
+        ItemStack pickedUpItem = event.getItem().getItemStack();
+        info.put("item_type", pickedUpItem.getType().toString());
+        info.put("amount", pickedUpItem.getAmount());
+        eventInfo.put("info", info);
+
         callback.handleEventInfo(player, eventInfo, "event-item");
     }
 
-    // Player interacts with inventory event
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getWhoClicked() instanceof Player) {
@@ -192,7 +240,12 @@ public class PlayerEventListener implements Listener {
             Map<String, Object> eventInfo = new HashMap<>();
             eventInfo.put("player", player.getName());
             eventInfo.put("event", PlayerEventType.inventory_click_event);
-            eventInfo.put("slot", event.getSlot());
+
+            Map<String, Object> info = new HashMap<>();
+            info.put("slot", event.getSlot());
+            info.put("clicked_item", event.getCurrentItem() != null ? event.getCurrentItem().getType().toString() : "none");
+            eventInfo.put("info", info);
+
             callback.handleEventInfo(player, eventInfo, "event-item");
         }
     }
@@ -201,12 +254,23 @@ public class PlayerEventListener implements Listener {
     public void onPlayerCraftItem(CraftItemEvent event) {
         if (event.getWhoClicked() instanceof Player) {
             Player player = (Player) event.getWhoClicked();
-            ItemStack craftedItem = event.getCurrentItem();
             Map<String, Object> eventInfo = new HashMap<>();
             eventInfo.put("player", player.getName());
             eventInfo.put("event", PlayerEventType.craft_item_event);
-            eventInfo.put("crafted_item", craftedItem != null ? craftedItem.getType().toString() + " x" + craftedItem.getAmount() : "unknown item");
+
+            Map<String, Object> info = new HashMap<>();
+            ItemStack craftedItem = event.getCurrentItem();
+            if (craftedItem != null) {
+                info.put("crafted_item", craftedItem.getType().toString());
+                info.put("amount", craftedItem.getAmount());
+            } else {
+                info.put("crafted_item", "unknown item");
+                info.put("amount", 0);
+            }
+            eventInfo.put("info", info);
+
             callback.handleEventInfo(player, eventInfo, "event-item");
         }
     }
+
 }

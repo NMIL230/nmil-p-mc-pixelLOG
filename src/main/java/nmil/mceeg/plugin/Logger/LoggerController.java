@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -31,14 +32,12 @@ public class LoggerController {
     private LocalDateTime endTime;
 
     private int logCount;
-    private boolean active;
+    public boolean active;
     private static final long LOW_UPDATE_RATE = 20L;
-    private static final long HIGH_UPDATE_RATE = 5L;
+    private static final long HIGH_UPDATE_RATE = 1L;
     private static final long DELAY = 0L;
 
     private static final int CACHE_SIZE_THRESHOLD = 200;
-
-    private static final String savingDir = "spigot/pixelLogs/";
 
 
     public LoggerController(NmilPlayer nmilPlayer, Player player, MainPluginCallback callback) {
@@ -80,22 +79,17 @@ public class LoggerController {
 
         playerTasks.add(highFrequencyTask);
         highFrequencyTask.runTaskTimer(callback.getMainPlugin(), DELAY, HIGH_UPDATE_RATE);
-
-        sendLoggerMessage(CaptureMessageType.CAPTURE_START, false);
     }
 
-    public void stopCapture(boolean gameFinished) {
+    public void stopCapture() {
         active = false;
         callback.sendSpigotLog("PixelLOG: Stop collecting logs on " + player.getName() + " saved " + logCount + " logs");
 
         for (BukkitRunnable task : playerTasks) {
             task.cancel();
         }
-
-        flushLogsToFile();
-
         endTime = LocalDateTime.now();
-        sendLoggerMessage(CaptureMessageType.CAPTURE_STOP, gameFinished);
+        flushLogsToFile();
     }
 
     private void flushLogsToFile() {
@@ -103,11 +97,28 @@ public class LoggerController {
             return;
         }
 
-        try (FileWriter writer = new FileWriter(logFile, true)) {
-            for (Map<String, Object> log : logCache) {
-                writer.write(gson.toJson(log));
-                writer.write(System.lineSeparator());
+        try (FileWriter writer = new FileWriter(logFile, false)) {
+            Map<String, Object> fileStructure = new HashMap<>();
+            if (logFile.exists() && logFile.length() > 0) {
+                fileStructure = gson.fromJson(new FileReader(logFile), Map.class);
+            } else {
+                fileStructure.put("_id", UUID.randomUUID().toString());
+                fileStructure.put("filename", logFile.getName());
+                fileStructure.put("username", player.getName());
+                fileStructure.put("game_start_time", startTime.toString());
+                fileStructure.put("game_end_time", startTime.toString());
+                fileStructure.put("plugin_version", getPluginVersion());
+                fileStructure.put("logs", new ArrayList<>());
             }
+
+            List<Map<String, Object>> logs = (List<Map<String, Object>>) fileStructure.get("logs");
+            logs.addAll(logCache);
+
+            if (endTime != null) {
+                fileStructure.put("game_end_time", endTime.toString());
+            }
+
+            writer.write(gson.toJson(fileStructure));
             logCache.clear();
         } catch (IOException e) {
             callback.sendSpigotLog("PixelLOG: Failed to write logs to file: " + e.getMessage());
@@ -115,7 +126,7 @@ public class LoggerController {
     }
 
     private void setupLogFile() {
-        String logfileDirPath = "spigot/pixelLogs/" + player.getName();
+        String logfileDirPath = "PixelLogs/" + player.getName();
         String fileName = player.getName() + "_" + UTCDatetime.getUTCDatetime() + ".json";
 
         File logDir = new File(logfileDirPath);
@@ -134,20 +145,4 @@ public class LoggerController {
         }
     }
 
-    private void sendLoggerMessage(CaptureMessageType message, boolean gameFinished) {
-        Map<String, Object> msgWrapper = new HashMap<>();
-        msgWrapper.put("title", MessageType.CAPTURE_MESSAGE);
-        msgWrapper.put("username", player.getName());
-        msgWrapper.put("message", message);
-        msgWrapper.put("plugin_version", getPluginVersion());
-        msgWrapper.put("finished", gameFinished);
-
-        if (message == CaptureMessageType.CAPTURE_START) {
-            msgWrapper.put("game_start_time", UTCDatetime.getUTCDatetime());
-        } else {
-            msgWrapper.put("game_end_time", UTCDatetime.getUTCDatetime());
-        }
-
-        callback.sendSpigotLog(gson.toJson(msgWrapper));
-    }
 }
