@@ -7,7 +7,7 @@ A comprehensive list of all data categories can be captured is provided [here](h
 ## Features
 - **Player Data Logging**: Captures and logs detailed player information.
 - **Event Tracking**: Tracks game events like block placement, item drops, and interactions. 
-- **[COMING SOON]** Configuration File: We will introduce configuration files to allow users to set parameters and the type of data collected.
+- **[COMING SOON]** We will introduce a configuration files to allow users to set parameters and the type of data collected.
 
 ---
 
