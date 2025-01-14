@@ -2,10 +2,12 @@
 
 PixelLog is a Minecraft Spigot plugin designed to capture player information across any game mode. This includes, but is not limited to, player location, views, inventory, and various game events. The plugin is specifically tailored for Spigot version **1.20.4**.
 
+A comprehensive list of all data categories can be captured is provided [here](https://github.com/NMIL230/nmil-mc-pixelLOG/blob/main/DOCUMENTATION.md).
+
 ## Features
 - **Player Data Logging**: Captures and logs detailed player information.
 - **Event Tracking**: Tracks game events like block placement, item drops, and interactions. 
-- **[COMING SOON]** Configuration File: We will introduce configuration files to allow users to set parameters and the type of data collected.
+- **[COMING SOON]** We will introduce a configuration files to allow users to set parameters and the type of data collected.
 
 ---
 
@@ -46,7 +48,7 @@ PixelLog provides the following commands for managing logs:
 | **pl-version**  | Display the plugin version (test command).    | `/pl-version`                  |
 
 ### Logfile
-After stopping the log data or when the player exits the game, you can find the generated logfile in the PixelLogs folder under the Spigot directory.
+After stopping the log data or when the player exits the game, you can find the generated logfile in the `PixelLogs` folder under the Spigot directory.
 
 ---
 
