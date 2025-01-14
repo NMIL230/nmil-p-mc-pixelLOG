@@ -25,6 +25,12 @@ public class MainCommandExecutor implements CommandExecutor {
 
         Player player = (Player) sender;
         switch (label.toLowerCase()) {
+            case "rt-pl-start":
+                handleRealTimePlStart(player);
+                break;
+            case "rt-pl-stop":
+                handleRealTimePlStop(player);
+                break;
             case "pl-start":
                 handlePlStart(player);
                 break;
@@ -46,6 +52,16 @@ public class MainCommandExecutor implements CommandExecutor {
         }
 
         return true;
+    }
+    private void handleRealTimePlStart(Player player) {
+        player.sendMessage(ChatColor.GREEN + "Started collecting logs - Real Time.");
+        callback.getNmilPlayer(player).startRealTimeCollectingLogsOnPlayer();
+    }
+
+    private void handleRealTimePlStop(Player player) {
+        player.sendMessage(ChatColor.GREEN + "Stopped collecting logs - Real Time.");
+        callback.getNmilPlayer(player).stopRealTimeCollectingLogsOnPlayer();
+
     }
 
     private void handlePlStart(Player player) {

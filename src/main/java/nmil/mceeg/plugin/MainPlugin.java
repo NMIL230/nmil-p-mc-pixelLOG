@@ -52,7 +52,7 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
         logger = new Logger(this);
 
         // WebSocket
-        // startNewWebSocketServer("Main", new InetSocketAddress("localhost", 8887));
+        startNewWebSocketServer("Main", new InetSocketAddress("localhost", 8887));
 
         getLogger().info("PixelLOG Enabled");
 
@@ -61,7 +61,7 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
     @Override
     public void onDisable() {
         getLogger().info("PixelLOG Finalizing...");
-        // stopNewWebSocketServer();
+        stopNewWebSocketServer();
         getLogger().info("PixelLOG Disabled");
     }
 
@@ -135,14 +135,10 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
         wsServerController.broadcast(json);
     }
 
-
-
-
     private void startNewWebSocketServer(String usage, InetSocketAddress address) {
         wsServerController = new WebSocketServerController(usage, this, address );
         wsServerController.startServer();
     }
-
 
     private void stopNewWebSocketServer() {
         if (wsServerController != null) {

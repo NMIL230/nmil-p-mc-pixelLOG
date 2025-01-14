@@ -72,7 +72,17 @@ public class ObservationSpaceGetter {
             case EVENT_LOG:
                 if (event != null) {
                     data.put("Event", event);
-//                    data.put("TargetBlock",getPlayerTargetBlock(player));
+                    data.put(String.valueOf(LogInfoType.location), player.getLocation().toVector());
+                    data.put(String.valueOf(LogInfoType.target_block),getPlayerTargetBlock(player));
+                    data.put(String.valueOf(LogInfoType.inventory), getSimpleItemStacks(player.getInventory().getContents()));
+                    // data.put(String.valueOf(LogInfoType.nearby_blocks),getNearbyBlocks(player));
+                    data.put(String.valueOf(LogInfoType.nearby_entities),getNearbyEntities(player));
+                    data.put(String.valueOf(LogInfoType.ray_trace_entities),getPlayerRayTraceEntity(player));
+                    data.put(String.valueOf(LogInfoType.health),(int) player.getHealth());
+                    data.put(String.valueOf(LogInfoType.hunger), player.getFoodLevel());
+                    data.put(String.valueOf(LogInfoType.biome),getPlayerBiome(player));
+
+
 //                    data.put("TargetEntity",getPlayerTargetEntity(player));
                 }
                 break;

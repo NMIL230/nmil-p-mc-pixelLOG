@@ -28,16 +28,16 @@ public class LoggerController {
     private File logFile;
 
     private final Gson gson;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
+    private String startTime;
+    private String endTime;
 
     private int logCount;
     public boolean active;
     private static final long LOW_UPDATE_RATE = 20L;
-    private static final long HIGH_UPDATE_RATE = 1L;
+    private static final long HIGH_UPDATE_RATE = 20L;
     private static final long DELAY = 0L;
 
-    private static final int CACHE_SIZE_THRESHOLD = 200;
+    private static final int CACHE_SIZE_THRESHOLD = 500;
 
 
     public LoggerController(NmilPlayer nmilPlayer, Player player, MainPluginCallback callback) {
@@ -67,7 +67,7 @@ public class LoggerController {
         active = true;
         callback.sendSpigotLog("PixelLOG: Start collecting logs on " + player.getName());
 
-        startTime = LocalDateTime.now();
+        startTime = UTCDatetime.getUTCDatetime();
         setupLogFile();
 
         BukkitRunnable highFrequencyTask = new BukkitRunnable() {
@@ -88,7 +88,7 @@ public class LoggerController {
         for (BukkitRunnable task : playerTasks) {
             task.cancel();
         }
-        endTime = LocalDateTime.now();
+        endTime = UTCDatetime.getUTCDatetime();
         flushLogsToFile();
     }
 
