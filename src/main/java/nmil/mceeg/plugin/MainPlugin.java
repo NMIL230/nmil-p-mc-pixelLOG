@@ -47,7 +47,8 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
         this.getCommand("pl-stop").setExecutor(commandExecutor);
         this.getCommand("pl-start-op").setExecutor(commandExecutor);
         this.getCommand("pl-stop-op").setExecutor(commandExecutor);
-
+        this.getCommand("rt-pl-start").setExecutor(commandExecutor);
+        this.getCommand("rt-pl-stop").setExecutor(commandExecutor);
 
         logger = new Logger(this);
 
@@ -115,6 +116,9 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
         NmilPlayer nmilPlayer = onlinePlayerMap.get(player);
         if (nmilPlayer != null && nmilPlayer.loggerController != null) {
             nmilPlayer.loggerController.handleLog(log, LogType.EVENT_LOG);
+        }
+        if (nmilPlayer != null && nmilPlayer.realTimeLoggerController != null) {
+            nmilPlayer.realTimeLoggerController.handleLog(log, LogType.EVENT_LOG);
         }
     }
 

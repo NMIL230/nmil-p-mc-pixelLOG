@@ -3,6 +3,7 @@
 /home/labuser/Documents/nmil-mc-pixelLOG/src/main/java/nmil/mceeg/plugin/Logger/LoggerController.java
 /home/labuser/Documents/nmil-mc-pixelLOG/src/main/java/nmil/mceeg/plugin/Logger/ObservationSpaceGetter.java
 /home/labuser/Documents/nmil-mc-pixelLOG/src/main/java/nmil/mceeg/plugin/Logger/PlayerEventListener.java
+/home/labuser/Documents/nmil-mc-pixelLOG/src/main/java/nmil/mceeg/plugin/Logger/RealTimeLoggerController.java
 /home/labuser/Documents/nmil-mc-pixelLOG/src/main/java/nmil/mceeg/plugin/MainCommandExecutor.java
 /home/labuser/Documents/nmil-mc-pixelLOG/src/main/java/nmil/mceeg/plugin/MainListener.java
 /home/labuser/Documents/nmil-mc-pixelLOG/src/main/java/nmil/mceeg/plugin/MainPlugin.java

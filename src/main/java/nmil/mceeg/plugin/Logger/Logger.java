@@ -13,7 +13,7 @@ public class Logger {
     private final ObservationSpaceGetter observationSpaceGetter;
 
     private int OBSERVATION_RADIUS = 3;
-    private int MAX_TARGET_DISTANCE = 20;
+    private int MAX_TARGET_DISTANCE = 10;
 
     public Logger(MainPluginCallback callback) {
         this.callback = callback;

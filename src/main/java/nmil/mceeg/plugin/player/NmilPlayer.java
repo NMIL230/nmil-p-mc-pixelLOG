@@ -25,6 +25,9 @@ public class NmilPlayer {
         if (loggerController != null && loggerController.active) {
             loggerController.stopCapture();
         }
+        if (realTimeLoggerController != null && realTimeLoggerController.active) {
+            realTimeLoggerController.stopRealTimeCapture();
+        }
     }
 
     public void startCollectingLogFileOnPlayer() {

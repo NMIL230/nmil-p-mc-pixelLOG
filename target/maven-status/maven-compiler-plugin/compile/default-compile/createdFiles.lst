@@ -3,8 +3,10 @@ nmil/mceeg/plugin/Logger/ObservationSpaceGetter$1.class
 nmil/mceeg/plugin/Logger/Logger.class
 nmil/mceeg/plugin/Logger/LoggerController.class
 nmil/mceeg/plugin/MainPlugin$1.class
+nmil/mceeg/plugin/Logger/RealTimeLoggerController$1.class
 nmil/mceeg/plugin/Logger/ObservationSpaceGetter.class
 nmil/mceeg/plugin/type/CaptureMessageType.class
+nmil/mceeg/plugin/Logger/RealTimeLoggerController.class
 nmil/mceeg/plugin/Logger/PlayerEventListener.class
 nmil/mceeg/plugin/MainPluginCallback.class
 nmil/mceeg/plugin/MainListener.class

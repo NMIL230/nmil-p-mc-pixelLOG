@@ -55,12 +55,16 @@ public class ObservationSpaceGetter {
                // data.put("Hunger", player.getFoodLevel());
                  data.put(String.valueOf(LogInfoType.type), LogType.HIGH_FREQUENCY_LOG);
                 data.put(String.valueOf(LogInfoType.location), player.getLocation().toVector());
-                data.put(String.valueOf(LogInfoType.view), getPlayerView(player));
-                //data.put(String.valueOf(LogInfoType.target_block),getPlayerTargetBlock(player));
-                data.put(String.valueOf(LogInfoType.ray_trace_block), getPlayerTargetBlockExactLocationAndType(player));
-                data.put(String.valueOf(LogInfoType.ray_trace_entities),getPlayerRayTraceEntity(player));
-               // data.put("NearbyEntities",getNearbyEntities(player));
-                //data.put("Hot-bar",getPlayerHotbar(player));
+                // data.put(String.valueOf(LogInfoType.view), getPlayerView(player));
+                data.put(String.valueOf(LogInfoType.target_block),getPlayerTargetBlock(player));
+                //data.put(String.valueOf(LogInfoType.ray_trace_block), getPlayerTargetBlockExactLocationAndType(player));
+                // data.put(String.valueOf(LogInfoType.ray_trace_entities),getPlayerRayTraceEntity(player));
+                data.put("NearbyEntities",getNearbyEntities(player));
+                data.put("NearbyBlocks",getNearbyBlocks(player));
+                data.put("Biome",getPlayerBiome(player));
+                data.put(String.valueOf(LogInfoType.inventory), getSimpleItemStacks(player.getInventory().getContents()));
+                data.put(String.valueOf(LogInfoType.health),(int) player.getHealth());
+                data.put(String.valueOf(LogInfoType.hunger), player.getFoodLevel());
                 break;
 
             case LOW_FREQUENCY_LOG:
@@ -74,13 +78,13 @@ public class ObservationSpaceGetter {
                     data.put("Event", event);
                     data.put(String.valueOf(LogInfoType.location), player.getLocation().toVector());
                     data.put(String.valueOf(LogInfoType.target_block),getPlayerTargetBlock(player));
-                    data.put(String.valueOf(LogInfoType.inventory), getSimpleItemStacks(player.getInventory().getContents()));
+                    //data.put(String.valueOf(LogInfoType.inventory), getSimpleItemStacks(player.getInventory().getContents()));
                     // data.put(String.valueOf(LogInfoType.nearby_blocks),getNearbyBlocks(player));
-                    data.put(String.valueOf(LogInfoType.nearby_entities),getNearbyEntities(player));
-                    data.put(String.valueOf(LogInfoType.ray_trace_entities),getPlayerRayTraceEntity(player));
-                    data.put(String.valueOf(LogInfoType.health),(int) player.getHealth());
-                    data.put(String.valueOf(LogInfoType.hunger), player.getFoodLevel());
-                    data.put(String.valueOf(LogInfoType.biome),getPlayerBiome(player));
+                    // data.put(String.valueOf(LogInfoType.nearby_entities),getNearbyEntities(player));
+                    // data.put(String.valueOf(LogInfoType.ray_trace_entities),getPlayerRayTraceEntity(player));
+                    //data.put(String.valueOf(LogInfoType.health),(int) player.getHealth());
+                    //data.put(String.valueOf(LogInfoType.hunger), player.getFoodLevel());
+                    //data.put(String.valueOf(LogInfoType.biome),getPlayerBiome(player));
 
 
 //                    data.put("TargetEntity",getPlayerTargetEntity(player));
@@ -219,9 +223,12 @@ public class ObservationSpaceGetter {
         Location location = player.getLocation();
         int radius = logger.getOBSERVATION_RADIUS();
         for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
+            for (int y = 0; y <= radius; y++) {
                 for (int z = -radius; z <= radius; z++) {
                     Block block = Objects.requireNonNull(location.getWorld()).getBlockAt(location.add(x, y, z));
+                    if (block.getType().equals(Material.AIR)) {
+                        continue;
+                    }
                     Location blockLocation = block.getLocation();
                     String locationString = "[x=" + blockLocation.getBlockX() + ", y=" + blockLocation.getBlockY() + ", z=" + blockLocation.getBlockZ()+ "]";
                     blocks.put(block.getType().toString().toLowerCase(), locationString);
