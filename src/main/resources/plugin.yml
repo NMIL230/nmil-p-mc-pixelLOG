@@ -9,12 +9,15 @@ commands:
   pl-stop:
     description: stop collecting logs on command sender.
     usage: /pr-stop
-  rt-pl-start:
+  dstart:
     description: start collecting (real time) logs on command sender.
-    usage: /rt-pl-start
-  rt-pl-stop:
+    usage: /dstart
+  dend:
       description: stop collecting (real time) logs on command sender.
-      usage: /rt-pl-start
+      usage: /dend
+  dreset:
+      description: Reset Pixelbingo.
+      usage: /dreset
   pl-start-op:
     description: start collecting logs on an online player, OP only.
     usage: /pl-start-op [username]

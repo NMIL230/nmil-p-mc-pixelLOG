@@ -47,8 +47,9 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
         this.getCommand("pl-stop").setExecutor(commandExecutor);
         this.getCommand("pl-start-op").setExecutor(commandExecutor);
         this.getCommand("pl-stop-op").setExecutor(commandExecutor);
-        this.getCommand("rt-pl-start").setExecutor(commandExecutor);
-        this.getCommand("rt-pl-stop").setExecutor(commandExecutor);
+        this.getCommand("dstart").setExecutor(commandExecutor);
+        this.getCommand("dend").setExecutor(commandExecutor);
+        this.getCommand("dreset").setExecutor(commandExecutor);
 
         logger = new Logger(this);
 
