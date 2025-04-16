@@ -6,6 +6,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.io.File;
 import java.io.IOException;
@@ -181,10 +183,16 @@ public class MainCommandExecutor implements CommandExecutor {
         }
         newWorld.setAutoSave(false);
         // 重置新世界时间到早上（时间 0 为黎明）
-        newWorld.setTime(0);
+        // 设置世界永远晴天
+        newWorld.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+        newWorld.setStorm(false);
+        newWorld.setThundering(false);
 
+        // 设置世界永远早上
+        newWorld.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        newWorld.setTime(0);  // 0 表示早上
         // 获取新世界 (0, 最高方块Y+1, 0)
-        Location spawnLoc = new Location(newWorld, -1028, 63, -1390);
+        Location spawnLoc = new Location(newWorld, -1028, 66, -1460);
         // 传送玩家
         player.teleport(spawnLoc);
 
@@ -195,7 +203,18 @@ public class MainCommandExecutor implements CommandExecutor {
         player.setFoodLevel(20);
         player.setSaturation(20F);
         player.getActivePotionEffects().forEach(effect -> player.removePotionEffect(effect.getType()));
+// 创建铁制工具
+        ItemStack ironAxe = new ItemStack(Material.IRON_AXE);
+        ItemStack ironPickaxe = new ItemStack(Material.IRON_PICKAXE);
+        ItemStack ironSword = new ItemStack(Material.IRON_SWORD);
+        ItemStack ironShovel = new ItemStack(Material.IRON_SHOVEL);
 
+// 获取玩家物品栏并添加物品
+        PlayerInventory inventory = player.getInventory();
+        inventory.addItem(ironAxe);
+        inventory.addItem(ironPickaxe);
+        inventory.addItem(ironSword);
+        inventory.addItem(ironShovel);
         player.sendMessage(GREEN + "[Reset] Welcome to PixelBingo!");
     }
 }
