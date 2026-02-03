@@ -8,7 +8,6 @@ A comprehensive list of all data categories can be captured is provided [here](h
 - **Player Data Logging**: Captures and logs detailed player information.
 - **Event Tracking**: Tracks game events like block placement, item drops, and interactions. 
 
----
 
 ## Installation
 
@@ -30,7 +29,6 @@ PixelLog is compatible with **Spigot 1.20.4**. Other versions are not supported 
    PixelLOG Enabled
    ```
 
----
 
 ## Usage
 
@@ -54,14 +52,14 @@ After stopping the log data or when the player exits the game, you can find the 
 ## Contribution
 We welcome contributions to improve PixelLog! Please see our [CONTRIBUTING.md](https://github.com/NMIL230/nmil-mc-pixelLOG/blob/main/CONTRIBUTING.md) for details on how to get involved. -->
 
----
+
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 
 
----
+
 
 ## Support
 - Please use GitHub Issues for bug reports and feature requests.
