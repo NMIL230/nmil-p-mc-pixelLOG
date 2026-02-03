@@ -7,7 +7,6 @@ A comprehensive list of all data categories can be captured is provided [here](h
 ## Features
 - **Player Data Logging**: Captures and logs detailed player information.
 - **Event Tracking**: Tracks game events like block placement, item drops, and interactions. 
-- **[COMING SOON]** We will introduce a configuration files to allow users to set parameters and the type of data collected.
 
 ---
 
@@ -50,19 +49,21 @@ PixelLog provides the following commands for managing logs:
 ### Logfile
 After stopping the log data or when the player exits the game, you can find the generated logfile in the `PixelLogs` folder under the Spigot directory.
 
----
+<!-- ---
 
 ## Contribution
-We welcome contributions to improve PixelLog! Please see our [CONTRIBUTING.md](https://github.com/NMIL230/nmil-mc-pixelLOG/blob/main/CONTRIBUTING.md) for details on how to get involved.
+We welcome contributions to improve PixelLog! Please see our [CONTRIBUTING.md](https://github.com/NMIL230/nmil-mc-pixelLOG/blob/main/CONTRIBUTING.md) for details on how to get involved. -->
 
 ---
 
 ## License
-TODO
+This project is licensed under the MIT License. See the LICENSE file for details.
 
 
 
 ---
 
 ## Support
-TODO
+- Please use GitHub Issues for bug reports and feature requests.
+- For security-related reports, contact: mark.lu@wustl.edu
+- Include: Spigot version, server log, and a minimal reproduction.
