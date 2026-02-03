@@ -27,7 +27,6 @@ public class MainCommandExecutor implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        // 保证执行者是玩家
         if (!(sender instanceof Player)) {
             sender.sendMessage(RED + "This command can only be run by a player.");
             return true;
@@ -57,7 +56,6 @@ public class MainCommandExecutor implements CommandExecutor {
                 handlePlVersion(player);
                 break;
 
-            // 新增指令 reset
             case "dreset":
                 handleReset(player);
                 break;
@@ -138,17 +136,14 @@ public class MainCommandExecutor implements CommandExecutor {
     private void handleReset(Player player) {
         player.sendMessage(YELLOW + "[Reset] loading bingo-world...");
 
-        // 准备新的目标世界名：bingo-world_玩家名_时间戳
         String nickname = player.getName().toLowerCase();
         String datetime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
         String newWorldName = "bingo-world_" + nickname + "_" + datetime;
 
-        // 拼接路径
         Path serverFolder = Bukkit.getWorldContainer().toPath();
         Path sourcePath = serverFolder.resolve("bingo-world");
         Path targetPath = serverFolder.resolve(newWorldName);
 
-        // 复制 bingo-world 到新目录
         try {
             Files.walk(sourcePath).forEach(src -> {
                 Path dst = targetPath.resolve(sourcePath.relativize(src));
@@ -166,7 +161,6 @@ public class MainCommandExecutor implements CommandExecutor {
                 }
             });
 
-            // 删除 uid.dat 防止世界冲突
             Files.deleteIfExists(targetPath.resolve("uid.dat"));
 
         } catch (IOException e) {
@@ -175,41 +169,33 @@ public class MainCommandExecutor implements CommandExecutor {
             return;
         }
 
-        // 创建并加载新世界
         World newWorld = Bukkit.createWorld(new WorldCreator(newWorldName));
         if (newWorld == null) {
             player.sendMessage(RED + "[Reset] load world failed.");
             return;
         }
         newWorld.setAutoSave(false);
-        // 重置新世界时间到早上（时间 0 为黎明）
-        // 设置世界永远晴天
+
         newWorld.setGameRule(GameRule.DO_WEATHER_CYCLE, false);
         newWorld.setStorm(false);
         newWorld.setThundering(false);
 
-        // 设置世界永远早上
+         
         newWorld.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-        newWorld.setTime(0);  // 0 表示早上
-        // 获取新世界 (0, 最高方块Y+1, 0)
+        newWorld.setTime(0);   
         Location spawnLoc = new Location(newWorld, -1028, 66, -1460);
-        // 传送玩家
         player.teleport(spawnLoc);
 
-        // 清空玩家背包
         player.getInventory().clear();
-        // 恢复玩家状态：血量、饥饿值、饱和度，并移除所有药水效果
         player.setHealth(player.getMaxHealth());
         player.setFoodLevel(20);
         player.setSaturation(20F);
         player.getActivePotionEffects().forEach(effect -> player.removePotionEffect(effect.getType()));
-// 创建铁制工具
         ItemStack ironAxe = new ItemStack(Material.IRON_AXE);
         ItemStack ironPickaxe = new ItemStack(Material.IRON_PICKAXE);
         ItemStack ironSword = new ItemStack(Material.IRON_SWORD);
         ItemStack ironShovel = new ItemStack(Material.IRON_SHOVEL);
 
-// 获取玩家物品栏并添加物品
         PlayerInventory inventory = player.getInventory();
         inventory.addItem(ironAxe);
         inventory.addItem(ironPickaxe);
