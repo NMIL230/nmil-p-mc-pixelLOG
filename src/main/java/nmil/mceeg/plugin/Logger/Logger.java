@@ -10,27 +10,27 @@ import static org.bukkit.Bukkit.getServer;
 public class Logger {
 
     private MainPluginCallback callback;
-    private final ObservationSpaceGetter observationSpaceGetter;
+    private final PlayerStatePollers playerStatePollers;
 
     private int OBSERVATION_RADIUS = 3;
     private int MAX_TARGET_DISTANCE = 10;
 
     public Logger(MainPluginCallback callback) {
         this.callback = callback;
-        observationSpaceGetter = new ObservationSpaceGetter(this);
+        playerStatePollers = new PlayerStatePollers(this);
         EventListenerCallback eventCallback = this::handleEventLog;
         PlayerEventListener playerEventListener = new PlayerEventListener(eventCallback);
         getServer().getPluginManager().registerEvents(playerEventListener, callback.getMainPlugin());
     }
     
     public Map<String, Object> getPlayerHighFreqLog(Player player) {
-        return observationSpaceGetter.getPlayerObservationSpace(player, LogType.HIGH_FREQUENCY_LOG,null);
+        return playerStatePollers.getPlayerObservationSpace(player, LogType.HIGH_FREQUENCY_LOG,null);
     }
     public Map<String, Object> getPlayerLowFreqLog(Player player) {
-        return observationSpaceGetter.getPlayerObservationSpace(player, LogType.LOW_FREQUENCY_LOG,null);
+        return playerStatePollers.getPlayerObservationSpace(player, LogType.LOW_FREQUENCY_LOG,null);
     }
     public void handleEventLog(Player player, Map<String, Object> eventInfo, String type) {
-        callback.addLogToPlayer(player, observationSpaceGetter.getPlayerObservationSpace(player, LogType.EVENT_LOG, eventInfo));
+        callback.addLogToPlayer(player, playerStatePollers.getPlayerObservationSpace(player, LogType.EVENT_LOG, eventInfo));
     }
 
     public void setOBSERVATION_RADIUS(int OBSERVATION_RADIUS) {

@@ -5,14 +5,14 @@ import nmil.mceeg.plugin.Logger.RealTimeLoggerController;
 import nmil.mceeg.plugin.MainPluginCallback;
 import org.bukkit.entity.Player;
 
-public class NmilPlayer {
+public class PixelPlayer {
 
     public Player player;
     public LoggerController loggerController;
     private MainPluginCallback callback;
     public RealTimeLoggerController realTimeLoggerController;
 
-    public NmilPlayer(Player player, MainPluginCallback callback) {
+    public PixelPlayer(Player player, MainPluginCallback callback) {
         this.callback = callback;
         this.player = player;
         loggerController = new LoggerController(this,player,callback);

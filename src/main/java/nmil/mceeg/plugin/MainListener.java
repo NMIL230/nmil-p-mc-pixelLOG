@@ -1,15 +1,9 @@
 package nmil.mceeg.plugin;
 
-import nmil.mceeg.plugin.player.NmilPlayer;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.event.server.ServerListPingEvent;
 
 public class MainListener implements Listener {

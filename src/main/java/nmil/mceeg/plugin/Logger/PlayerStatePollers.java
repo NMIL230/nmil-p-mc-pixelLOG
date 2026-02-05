@@ -17,18 +17,15 @@ import org.bukkit.util.Vector;
 
 import java.util.*;
 
-public class ObservationSpaceGetter {
+public class PlayerStatePollers {
     private final Logger logger;
 
-    public ObservationSpaceGetter( Logger logger) {
+    public PlayerStatePollers(Logger logger) {
         this.logger = logger;
     }
     public Map<String, Object> getPlayerObservationSpace(Player player, LogType type, Map<String, Object> event) {
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-//        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-        //sdf.format(new Date())
+
         Map<String, Object> data = new HashMap<>();
-        //data.put("Type", LogType.EVENT_LOG);
         data.put("event", null);
         data.put("time", UTCDatetime.getUTCDatetime());
         data.put("game_tick", player.getWorld().getGameTime());
@@ -87,7 +84,6 @@ public class ObservationSpaceGetter {
                     //data.put(String.valueOf(LogInfoType.biome),getPlayerBiome(player));
 
 
-//                    data.put("TargetEntity",getPlayerTargetEntity(player));
                 }
                 break;
             default:

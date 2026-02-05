@@ -3,7 +3,7 @@ package nmil.mceeg.plugin.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import nmil.mceeg.plugin.MainPluginCallback;
-import nmil.mceeg.plugin.player.NmilPlayer;
+import nmil.mceeg.plugin.player.PixelPlayer;
 import nmil.mceeg.plugin.type.*;
 import nmil.mceeg.plugin.util.UTCDatetime;
 import org.bukkit.entity.Player;
@@ -13,13 +13,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.*;
 
 import static nmil.mceeg.plugin.util.VersionControl.getPluginVersion;
 
 public class LoggerController {
-    private final NmilPlayer nmilPlayer;
+    private final PixelPlayer pixelPlayer;
     private final Player player;
     private final MainPluginCallback callback;
 
@@ -40,8 +39,8 @@ public class LoggerController {
     private static final int CACHE_SIZE_THRESHOLD = 500;
 
 
-    public LoggerController(NmilPlayer nmilPlayer, Player player, MainPluginCallback callback) {
-        this.nmilPlayer = nmilPlayer;
+    public LoggerController(PixelPlayer pixelPlayer, Player player, MainPluginCallback callback) {
+        this.pixelPlayer = pixelPlayer;
         this.player = player;
         this.callback = callback;
         this.playerTasks = new HashSet<>();

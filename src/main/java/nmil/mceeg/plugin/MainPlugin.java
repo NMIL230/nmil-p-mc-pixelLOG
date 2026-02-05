@@ -1,7 +1,7 @@
 package nmil.mceeg.plugin;
 
 import nmil.mceeg.plugin.Logger.Logger;
-import nmil.mceeg.plugin.player.NmilPlayer;
+import nmil.mceeg.plugin.player.PixelPlayer;
 
 import nmil.mceeg.plugin.type.LogType;
 import nmil.mceeg.plugin.util.WebSocketServerController;
@@ -16,7 +16,7 @@ import java.util.Objects;
 
 public class MainPlugin extends JavaPlugin implements MainPluginCallback {
 
-    HashMap<Player, NmilPlayer> onlinePlayerMap;
+    HashMap<Player, PixelPlayer> onlinePlayerMap;
 
 
     MainListener mainListener;
@@ -47,14 +47,14 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
         this.getCommand("pl-stop").setExecutor(commandExecutor);
         this.getCommand("pl-start-op").setExecutor(commandExecutor);
         this.getCommand("pl-stop-op").setExecutor(commandExecutor);
-        this.getCommand("dstart").setExecutor(commandExecutor);
-        this.getCommand("dend").setExecutor(commandExecutor);
-        this.getCommand("dreset").setExecutor(commandExecutor);
+        // this.getCommand("dstart").setExecutor(commandExecutor);
+        // this.getCommand("dend").setExecutor(commandExecutor);
+        // this.getCommand("dreset").setExecutor(commandExecutor);
 
         logger = new Logger(this);
 
         // WebSocket
-        startNewWebSocketServer("Main", new InetSocketAddress("localhost", 8887));
+        // startNewWebSocketServer("Main", new InetSocketAddress("localhost", 8887));
 
         getLogger().info("PixelLOG Enabled");
 
@@ -74,12 +74,12 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
 
 
     @Override
-    public HashMap<Player, NmilPlayer> getOnlinePlayerMap() {
+    public HashMap<Player, PixelPlayer> getOnlinePlayerMap() {
         return onlinePlayerMap;
     }
 
     @Override
-    public NmilPlayer getNmilPlayer(Player player) {
+    public PixelPlayer getNmilPlayer(Player player) {
 
         return onlinePlayerMap.get(player);
     }
@@ -89,7 +89,7 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
     @Override
     public void playerJoinHandler(Player player) {
         // if (!player.isOp()) {}
-        onlinePlayerMap.put(player, new NmilPlayer(player, this));
+        onlinePlayerMap.put(player, new PixelPlayer(player, this));
     }
 
     @Override
@@ -114,12 +114,12 @@ public class MainPlugin extends JavaPlugin implements MainPluginCallback {
 
     @Override
     public void addLogToPlayer(Player player, Map<String, Object> log) {
-        NmilPlayer nmilPlayer = onlinePlayerMap.get(player);
-        if (nmilPlayer != null && nmilPlayer.loggerController != null) {
-            nmilPlayer.loggerController.handleLog(log, LogType.EVENT_LOG);
+        PixelPlayer pixelPlayer = onlinePlayerMap.get(player);
+        if (pixelPlayer != null && pixelPlayer.loggerController != null) {
+            pixelPlayer.loggerController.handleLog(log, LogType.EVENT_LOG);
         }
-        if (nmilPlayer != null && nmilPlayer.realTimeLoggerController != null) {
-            nmilPlayer.realTimeLoggerController.handleLog(log, LogType.EVENT_LOG);
+        if (pixelPlayer != null && pixelPlayer.realTimeLoggerController != null) {
+            pixelPlayer.realTimeLoggerController.handleLog(log, LogType.EVENT_LOG);
         }
     }
 
