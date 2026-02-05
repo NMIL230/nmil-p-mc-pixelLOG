@@ -1,7 +1,7 @@
 
-# PixelLog
+# pixelLOG
 
-PixelLog is a research-oriented Minecraft Spigot plugin designed to capture granular player information across any game mode. It seamlessly integrates continuous state measurements (e.g., location, view) and discrete event occurrences (e.g., interactions, inventory changes), enabling detailed temporal analyses of player behaviors.
+pixelLOG is a research-oriented Minecraft Spigot plugin designed to capture granular player information across any game mode. It seamlessly integrates continuous state measurements (e.g., location, view) and discrete event occurrences (e.g., interactions, inventory changes), enabling detailed temporal analyses of player behaviors.
 
 The plugin is specifically tailored for **Spigot version 1.20.4**.
 
@@ -20,7 +20,7 @@ The plugin is specifically tailored for **Spigot version 1.20.4**.
 - Java Development Kit (JDK) 21 (if building from source).
 
 ### Option A: Using Pre-built Release
-1. Download the latest release of PixelLog from the [Releases](https://github.com/NMIL230/nmil-mc-pixelLOG/releases) page.
+1. Download the latest release of pixelLOG from the [Releases](https://github.com/NMIL230/nmil-mc-pixelLOG/releases) page.
 2. Place the `.jar` file into the `plugins` directory of your Spigot server.
 
 ### Option B: Building from Source (Maven)
@@ -45,7 +45,7 @@ If you prefer to compile the plugin yourself:
 
 ## Usage
 
-PixelLog provides administrative commands to control data collection sessions.
+pixelLOG provides administrative commands to control data collection sessions.
 
 ### Commands
 
@@ -61,7 +61,7 @@ PixelLog provides administrative commands to control data collection sessions.
 
 Log files are generated automatically when a logging session is stopped via command or when the player disconnects.
 
-* **Location:** `PixelLogs/` directory within your Spigot server folder.
+* **Location:** `pixelLOGs/` directory within your Spigot server folder.
 * **Format:** Structured JSON.
 
 #### Simple Log Output Example
