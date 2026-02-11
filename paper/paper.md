@@ -73,7 +73,7 @@ This utility has been demonstrated in recent applications: the framework served 
 
 # Acknowledgements
 
-This study was supported in part by NSF National Artificial Intelligence Research Resource award NAIRR240235.
+This study was supported in part by the Washington University OVCR Seed Grant and Here and Next Programs, as well as NSF National Artificial Intelligence Research Resource award NAIRR240235.
 
 # AI usage disclosure
 
