@@ -8,7 +8,7 @@ tags:
   - behavioral research
 authors:
   - name: Zeyu Lu
-    orcid: 0000-0000-0000-0000 
+    orcid: 0009-0003-9903-164X
     affiliation: 1
   - name: Dennis L. Barbour
     orcid: 0000-0000-0000-0000 
