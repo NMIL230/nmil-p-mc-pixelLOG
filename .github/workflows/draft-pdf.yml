@@ -1,0 +1,45 @@
+name: Draft PDF
+
+# Trigger the workflow only when files in the 'paper' directory 
+# or this workflow file itself are modified.
+on:
+  push:
+    paths:
+      - 'paper/**'
+      - '.github/workflows/draft-pdf.yml'
+  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
+
+# Grant write permission to the GITHUB_TOKEN so the workflow can push the PDF back to the repo
+permissions:
+  contents: write
+
+jobs:
+  paper:
+    runs-on: ubuntu-latest
+    name: Paper Draft
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build draft PDF
+        uses: openjournals/openjournals-draft-action@master
+        with:
+          journal: joss
+          # Path to the paper.md file relative to the repository root
+          paper-path: paper/paper.md
+
+      - name: Upload Artifact
+        # Uploads the PDF as a build artifact (downloadable from the Actions run summary)
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper
+          path: paper/paper.pdf
+
+      - name: Commit PDF to repository
+        # Commits the generated PDF back to the git repository so you can view it in the file list
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: '(auto) Update Paper PDF Draft'
+          # Force add the PDF file in the paper directory
+          add: 'paper/paper.pdf'
+          default_author: github_actions
