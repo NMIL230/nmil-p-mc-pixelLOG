@@ -71,6 +71,10 @@ An `Assembler` component harmonizes the heterogeneous data streams into chronolo
 
 This utility has been demonstrated in recent applications: the framework served as the data collection backbone for *pixelDOPA (Digital Online Psychometric Assessment)*, enabling the validation of immersive cognitive minigames against the NIH Toolbox [@Marticorena:Immersive:2025], and supported real-time data integration for *AMLEC*, a multidimensional Bayesian active machine learning study of working memory [@Marticorena:Multidimensional:2025].
 
+# Acknowledgements
+
+This study was supported in part by NSF National Artificial Intelligence Research Resource award NAIRR240235.
+
 # AI usage disclosure
 
 Generative AI tools (Google Gemini) were used to assist in the drafting, formatting, and refining of the text in this paper. The authors reviewed, edited, and validated all AI-assisted outputs and take full responsibility for the content.
